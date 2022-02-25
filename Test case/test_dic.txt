@@ -1,0 +1,27 @@
+*** Settings ***
+Library           Collections
+Library           ExcelLibrary
+Library           Selenium2Library
+
+*** Test Cases ***
+Loop Through Dict
+    &{mydict}    Create Dictionary    a=1    b=2
+    : FOR    ${key}    IN    @{mydict.keys()}
+    \    Log    ${mydict["${key}"]}
+
+Loop Through Dict And Multiplicate Values
+    ${results}    set variable
+    &{mydict}    Create Dictionary    a=1    b=2    c=3
+    : FOR    ${key}    IN    @{mydict.keys()}
+    \    ${new_value}    Evaluate    ${mydict["${key}"]}
+    \    Set To Dictionary    ${mydict}    ${key}=${new_value}
+    \    ${value}    Evaluate    $data.get("b")
+    Log Many    ${mydict}    ${value}
+
+TestDic
+    [Documentation]    Get value from dictionary, returning None if key not in dictionary
+    ${data}=    Create dictionary    key1=one    key2=two
+    ${value}=    Evaluate    $data.get("key2")
+
+Test
+    Open Browser    https://github.com/robotframework/RIDE/issues/1793    gc

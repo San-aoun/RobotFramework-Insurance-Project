@@ -1,0 +1,11 @@
+*** Settings ***
+Library           SikuliLibrary    mode=NEW
+
+*** Variables ***
+${IMAGE_DIR}      ${CURDIR}\\start
+
+*** Test Cases ***
+test
+    Click    start.png
+
+*** Keywords ***

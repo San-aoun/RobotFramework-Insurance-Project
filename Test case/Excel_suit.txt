@@ -1,0 +1,49 @@
+*** Settings ***
+Suite Setup
+Library           ExcelLibrary
+Library           OperatingSystem
+Library           robot.api.logger
+Library           Selenium2Library
+Library           String
+Library           openpyxl.writer.excel
+Library           openpyxl.reader.excel
+Library           Collections
+Library           openpyxl
+Library           OpenPyxlLibrary
+
+*** Variables ***
+${TestSheet}      ${CURDIR}\\test02.xls
+
+*** Test Cases ***
+TC01 open excel
+    [Setup]
+    \    ${TestSheet}
+    [Teardown]
+
+TC02 Create workbook
+    Create Excel Workbook    NewExcelSheet
+    Save Excel    NewExcel.xls    default=True
+
+TC03 Write on workbook
+    Add Value    NewExcel2.xlsx    C2    FAILED
+    Add Value    NewExcel2.xlsx    C3    PASS
+    Add Value    NewExcel2.xlsx    D2    Info
+    Add Value    c    D3    Info
+
+TC04 Write on Excel defind sheet
+    Open Excel    D:\\MyJobs\\Test case\\NewExcel.xls
+    Put String To Cell    TC01    3    2    PASS
+    Comment    Put String To Cell    TestCase    2    4    Info
+    Comment    Save Excel    NewExcel.xls
+    ${row}    Get Row Values    TC01    2
+    ${rowData}    Set Variable    ${row}
+    Log Many    ${rowData}
+
+TC05 Write Excel Test
+    Write To Excel    NewExcel2.xlsx    TC01    C2    Success
+
+TC06 Read excel
+    openpyxl.Load Workbook    NewExcel2.xlsx
+    ${aa}=    OpenPyxlLibrary.Get Sheet Names
+
+*** Keywords ***

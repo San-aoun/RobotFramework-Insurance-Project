@@ -1,0 +1,2 @@
+TC_Number	TC_Desc	Status	Comments
+TC01	Fetch Data From Excel & Write Results	FAIL	XLRDError: Unsupported format, or corrupt file: Expected BOF record; found '\r\n'
